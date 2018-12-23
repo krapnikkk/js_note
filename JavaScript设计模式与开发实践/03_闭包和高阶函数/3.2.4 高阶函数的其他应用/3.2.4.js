@@ -155,7 +155,29 @@ var renderFriendList = function( data ){
 };
 renderFriendList( ary );
 
-
+/**
+ * 分时函数 timeChunk
+ * @param ary   数组
+ * @param fn    回调函数
+ * @param count 分时规格
+ * @returns {Function}
+ */
 var timeChunk = function(ary,fn,count){
+    var obj,t;
+    var len = ary.length;
+    var start = function(){
+        for(var i = 0;i<Math.min(count||1,len);i++){
+            var obj = ary.shift();
+            fn(obj);
+        }
+    };
 
+    return function(){
+        t = setInterval(function(){
+            if(ary.length === 0){
+                return clearInterval(t);
+            }
+            start();
+        },200);
+    };
 };
