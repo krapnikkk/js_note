@@ -109,6 +109,12 @@ Function.prototype.uncurrying = function(){
 /*
 3.函数节流throttle
  */
+/**
+ * 节流函数 throttle
+ * @param fn
+ * @param interval
+ * @returns {Function}
+ */
 var throttle = function(fn,interval){
     var _self = fn,//保存需要被延迟执行的函数引用
         timer,//定时器
@@ -162,12 +168,12 @@ renderFriendList( ary );
  * @param count 分时规格
  * @returns {Function}
  */
-var timeChunk = function(ary,fn,count){
+var timeChunk = function(ary,fn,count,interval){
     var obj,t;
     var len = ary.length;
     var start = function(){
         for(var i = 0;i<Math.min(count||1,len);i++){
-            var obj = ary.shift();
+            obj = ary.shift();//将时间分发
             fn(obj);
         }
     };
@@ -178,6 +184,60 @@ var timeChunk = function(ary,fn,count){
                 return clearInterval(t);
             }
             start();
-        },200);
+        },interval||200); //分批执行的间隔
     };
+};
+
+//创建1000个dom节点
+var ary = [];
+for(var i = 1; i<= 1000;i++){
+    ary.push(i);
+}
+
+var createDom = function(n){
+    var div = document.createElement('div');
+    div.innerHTML = n;
+    document.body.appendChild(div);
+};
+
+var renderDomList = timeChunk(ary,createDom,8,300);
+
+renderDomList();
+
+/*
+5.惰性加载函数
+ */
+var addEvent = function(elem,type,handler){
+    if(window.addEventListener){
+        return elem.addEventListener(type,handler,false);
+    }
+    if(window.attachEvent){
+        return elem.attachEvent('on'+type,handler);
+    }
+};
+
+var addEvent = (function(){
+    if(window.addEventListener){
+        return function(elem,type,handler){
+            elem.addEventListener(type,handler,false);
+        }
+    }
+    if(window.attachEvent){
+        return function(elem,type,handler){
+            elem.attachEvent('on'+type,handler);
+        }
+    }
+})();
+
+var addEvent = function( elem, type, handler ){
+    if ( window.addEventListener ){
+        addEvent = function( elem, type, handler ){
+            elem.addEventListener( type, handler, false );
+        }
+    }else if ( window.attachEvent ){
+        addEvent = function( elem, type, handler ){
+            elem.attachEvent( 'on' + type, handler );
+        }
+    }
+    addEvent( elem, type, handler );
 };
