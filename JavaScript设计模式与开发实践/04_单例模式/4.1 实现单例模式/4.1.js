@@ -14,6 +14,18 @@ Singleton.getInstance = function (name) {
     return this.instance;
 };
 
+
+
+// Singleton.getInstance = (function(){
+//     var instance = null;
+//     return function( name ){
+//         if ( !instance ){
+//             instance = new Singleton( name );
+//         }
+//         return instance;
+//     }
+// })();
+
 var a = Singleton.getInstance('krapnik');
 var b = Singleton.getInstance('krap');
 
