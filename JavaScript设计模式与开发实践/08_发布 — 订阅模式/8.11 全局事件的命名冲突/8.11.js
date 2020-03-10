@@ -59,7 +59,7 @@ var Event = (function () {
                 key = _shift.call(arguments),
                 args = arguments,
                 _self = this,
-                ret,
+                 ret,
                 stack = cache[key];
             if (!stack || !stack.length) {
                 return;
@@ -109,10 +109,7 @@ var Event = (function () {
                         return fn();
                     }
                 };
-            return namespace ?
-                ( namespaceCache[namespace] ? namespaceCache[namespace] :
-                    namespaceCache[namespace] = ret )
-                : ret;
+            return namespace ? ( namespaceCache[namespace] ? namespaceCache[namespace] : namespaceCache[namespace] = ret ) : ret;
         };
         return {
             create: _create,
