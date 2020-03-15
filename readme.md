@@ -14,6 +14,7 @@
 | 文章 |  详情 |
 |:-------- |:--------:|
 | [Javascript模块化编程](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html) | [查看](./Javascript模块化编程) |
+| [CMD模块定义规范](https://github.com/seajs/seajs/issues/242) | [查看](./CMD模块定义规范) |
 
 
 
