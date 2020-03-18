@@ -9,4 +9,4 @@ function Module(id, parent) {
   
   module.exports = Module;
   
-  var module = new Module(filename, parent);
+  // var module = new Module(filename, parent);
