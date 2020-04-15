@@ -6,6 +6,9 @@
      listSize;
      position;
      length;
+     append();
+     find();
+     remove();
      clear();
      toString();
      getElement();
