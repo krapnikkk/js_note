@@ -52,6 +52,15 @@ class List {
         this.dataStore = [];
         this.listSize = this.position = 0;
     }
+
+    contains(element){
+        for(var i = 0;i<this.dataStore.length; i++){
+            if(this.dataStore[i]==element){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 function test() {
