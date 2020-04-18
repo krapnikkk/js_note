@@ -23,7 +23,7 @@ class List {
         var foundAt = this.find(element);
         if (foundAt > -1) {
             this.dataStore.splice(foundAt, 1);
-            this.List--;
+            this.listSize--;
             return true;
         }
         return false;
@@ -37,29 +37,63 @@ class List {
         return this.dataStore;
     }
 
-    insert(element,offset){
+    insert(element, offset) {
         var insertPosition = this.find(offset);
-        if(insertPosition>-1){
-            this.dataStore.splice(insertPosition+1,0,element);
+        if (insertPosition > -1) {
+            this.dataStore.splice(insertPosition + 1, 0, element);
             this.listSize++;
             return true;
         }
         return false;
     }
 
-    clear(){
+    clear() {
         delete this.dataStore;
         this.dataStore = [];
         this.listSize = this.position = 0;
     }
 
-    contains(element){
-        for(var i = 0;i<this.dataStore.length; i++){
-            if(this.dataStore[i]==element){
+    contains(element) {
+        for (var i = 0; i < this.dataStore.length; i++) {
+            if (this.dataStore[i] == element) {
                 return true;
             }
         }
         return false;
+    }
+
+    front() {
+        this.position = 0;
+    }
+
+    end() {
+        this.position = this.listSize - 1;
+    }
+
+    prev() {
+        // if (this.position > 0) {
+            --this.position;
+        // }
+        return this;
+    }
+
+    next() {
+        // if (this.position < this.listSize - 1) {
+            ++this.position;
+        // }
+        return this;
+    }
+
+    currentPosition() {
+        return this.position;
+    }
+
+    moveTo(position) {
+        this.position = position;
+    }
+
+    getElement() {
+        return this.dataStore[this.position];
     }
 }
 
@@ -69,8 +103,27 @@ function test() {
     names.append("Krapnik");
     names.append("John").append("Tom");
     console.log(names.toString());
+
     names.remove("John");
     console.log(names.toString());
+
+    names.front();
+    console.log(names.getElement());
+    names.next();
+    console.log(names.getElement());
+    names.next().next().prev();
+    console.log(names.getElement());
+
+    console.log("=========");
+
+    //迭代器
+    for (names.front(); names.currentPosition() < names.length; names.next()) {
+        console.log(names.getElement());
+    }
+
+    for (names.end(); names.currentPosition() >= 0; names.prev()) {
+        console.log(names.getElement());
+    }
 }
 
 test();
