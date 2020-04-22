@@ -31,14 +31,48 @@ function createArr(list) {
     return arr;
 }
 
-var movies = createArr(list);
-var movieList = new List();
-for (var i = 0; i < movies.length; i++) {
-    movieList.append(movies[i]);
+
+
+function Customer(name,movie){
+    this.name = name;
+    this.movie = movie;
 }
 
 function displayList(list) {
     for(list.front();list.currentPosition()<list.length;list.next()){
-        console.log(list.getElement());
+        let item = list.getElement();
+        if(item instanceof Customer){
+            console.log(`${item["name"]} ${item["movie"]}`);
+        }else{
+            console.log(item);
+        }
+        
     }
 }
+
+function checkOut(name,movie,filmList,customerList){
+    if(filmList.contains(movie)){
+        var c = new Customer(name,movie);
+        customerList.append(c);
+        filmList.remove(movie);
+    }else{
+        console.log(`${movie} is not available`);
+    }
+}
+
+function test(){
+    var movies = createArr(list);
+    var movieList = new List();
+    for (var i = 0; i < movies.length; i++) {
+        movieList.append(movies[i]);
+    }
+    
+    var customers = new List();
+    console.log(`Available movies:\n`);
+    displayList(movieList);
+    checkOut("John","8. 8.7 Star Wars (1977) 154,282 星球大战4",movieList,customers);
+    console.log(`Customer Rentals:\n`);
+    displayList(customers);
+}
+
+test();
