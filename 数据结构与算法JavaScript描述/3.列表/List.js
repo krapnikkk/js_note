@@ -72,14 +72,14 @@ class List {
 
     prev() {
         // if (this.position > 0) {
-            --this.position;
+        --this.position;
         // }
         return this;
     }
 
     next() {
         // if (this.position < this.listSize - 1) {
-            ++this.position;
+        ++this.position;
         // }
         return this;
     }
@@ -94,6 +94,18 @@ class List {
 
     getElement() {
         return this.dataStore[this.position];
+    }
+
+    insertWord(word) {
+        if (this.dataStore.every((value) => {
+            // if(typeof word === 'number' && isFinite(word)){//number
+            return word > value;
+            // }else{//letter
+
+            // }
+        })) {
+            this.append(word);
+        }
     }
 }
 
