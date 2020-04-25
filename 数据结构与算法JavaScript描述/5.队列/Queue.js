@@ -15,6 +15,16 @@ class Queue {
         return this.dataStore.shift();
     }
 
+    dequeueByPriority(code) {
+        var priority = this.dataStore[0][code];
+        for (var i = 1; i < this.dataStore.length; i++) {
+            if (this.dataStore[i][code] < priority) {
+                priority = i;
+            }
+        }
+        return this.dataStore.splice(priority, 1);
+    }
+
     front() {
         return this.dataStore[0];
     }
@@ -34,7 +44,12 @@ class Queue {
     toString() {
         var retStr = "";
         for (var i = 0; i < this.dataStore.length; i++) {
-            retStr += this.dataStore[i] + "\n";
+            if (this.dataStore[i].name) {
+                retStr += this.dataStore[i].name + " code: " + this.dataStore[i].code + "\n";
+            } else {
+                retStr += this.dataStore[i] + "\n";
+            }
+
         }
         return retStr;
     }
