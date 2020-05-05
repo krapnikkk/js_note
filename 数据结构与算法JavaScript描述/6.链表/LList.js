@@ -113,6 +113,54 @@ class DoubleLList {
     }
 }
 
+/**
+ * 循环链表
+ */
+class LoopLList{
+    constructor() {
+        this.head = new Node("head");
+        this.head.next = this.head;
+    }
+
+    find(item) {
+        var currNode = this.head;
+        while (currNode.element != item) {
+            currNode = currNode.next;
+        }
+        return currNode;
+    }
+
+    findPrevious(item) {
+        var currNode = this.head;
+        while (!(currNode.next == null) && (currNode.next.element != item)) {
+            currNode = currNode.next;
+        }
+        return currNode;
+    }
+
+    insert(newElement, item) {
+        var newNode = new Node(newElement);
+        var current = this.find(item);
+        newNode.next = current.next;
+        current.next = newNode;
+    }
+
+    remove(item) {
+        var preNode = this.findPrevious(item);
+        if (!(preNode.next == null)) {
+            preNode.next = preNode.next.next;
+        }
+    }
+
+    display() {
+        var currNode = this.head;
+        while (!(currNode.next == null)&&!(currNode.next.element == "head")) {
+            console.log(currNode.next.element);
+            currNode = currNode.next;
+        }
+    }
+}
+
 function test() {
     console.log("====SingleLList====");
     var cities = new SingleLList();
