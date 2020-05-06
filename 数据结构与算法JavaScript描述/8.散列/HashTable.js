@@ -1,6 +1,8 @@
 class HashTable {
-    constructor() {
-        this.table = new Array(137);
+    constructor(count) {
+        this.table = new Array(count);
+        this.values = [];
+        this.type = 1;//1:simpleHash 2:betterHash 3:chains 4:linear
     }
 
     simpleHash(data) {
@@ -26,18 +28,74 @@ class HashTable {
         return parseInt(total);
     }
 
-    put(data) {
-        // var pos = this.simpleHash(data);
-        var pos = this.betterHash(data);
+    put(data, key = 0) {
+        var pos;
+        if (this.type == 1) {
+            pos = this.simpleHash(data);
+        } else if (this.type == 2) {
+            pos = this.betterHash(data);
+        } else if (this.type == 3) {
+            pos = this.betterHash(key);
+            var index = 0;
+            if (this.table[pos][index] == undefined) {
+                this.table[pos][index + 1] = data;
+                ++index;
+            } else {
+                while (this.table[pos][index] != undefined) {
+                    ++index;
+                }
+                this.table[pos][index + 1] = data;
+            }
+        } else if (this.type == 4) {
+            pos = this.betterHash(data);
+            if (this.table[pos] == undefined) {
+                this.table[pos] = key;
+                this.values[pos] = data;
+            }
+            else {
+                while (this.table[pos] != undefined) {
+                    pos++;
+                }
+                this.table[pos] = key;
+                this.values[pos] = data;
+            }
+        }
         this.table[pos] = data;
+    }
+
+    get(key) {
+        if (this.type == 2) {
+            return this.table[this.betterHash(key)];
+        } else if (this.type == 3) {
+            var index = 0;
+            var hash = this.betterHash(key);
+            if (this.table[pos][index] = key) {
+                return this.table[pos][index + 1];
+            } else {
+                index += 2;
+                while (this.table[pos][index] != key) {
+                    index += 2;
+                }
+                return this.table[pos][index + 1];
+            }
+            return undefined;
+        }
+
     }
 
     showDistro() {
         var n = 0;
         for (var i = 0; i < this.table.length; i++) {
-            if (this.table[i] != undefined) {
-                console.log(`${i}:${this.table[i]}`);
+            if (this.type == 3) {
+                if (this.table[i][0] != undefined) {
+                    console.log(`${i}:${this.table[i]}`);
+                }
+            } else {
+                if (this.table[i] != undefined) {
+                    console.log(`${i}:${this.table[i]}`);
+                }
             }
+
         }
     }
 
@@ -55,12 +113,18 @@ class HashTable {
             arr[i] = num;
         }
     }
+
+    buildChains() {
+        for (var i = 0; i < this.table.length; ++i) {
+            this.table[i] = [];
+        }
+    }
 }
 
 function test() {
     var someNames = ["David", "Jennifer", "Donnie", "Raymond",
         "Cynthia", "Mike", "Clayton", "Danny", "Jonathan"];
-    var hTable = new HashTable();
+    var hTable = new HashTable(137);
     for (var i = 0; i < someNames.length; i++) {
         hTable.put(someNames[i]);
     }
