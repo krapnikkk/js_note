@@ -3,6 +3,7 @@ class Node {
         this.data = data;
         this.left = left;
         this.right = right;
+        this.count = 1;
     }
 
     show() {
@@ -39,6 +40,12 @@ class BST {
                 }
             }
         }
+    }
+
+    update(data){
+        var grade = this.find(data);
+        grade.count++;
+        return grade;
     }
 
     inOrder(node) {
@@ -81,18 +88,50 @@ class BST {
         return current.data;
     }
 
-    find(data){
+    find(data) {
         var current = this.root;
         while (current != null) {
-            if (current.data == data){
+            if (current.data == data) {
                 return current;
-            }else if (data<current.data){
+            } else if (data < current.data) {
                 current = current.left;
-            }else if (data>current.data){
+            } else if (data > current.data) {
                 current = current.right;
             }
         }
         return null;
+    }
+
+    remove(data) {
+        this.root =  this.removeNode(this.root, data);
+    }
+
+    removeNode(node, data) {
+        if (node == null) {
+            return null;
+        }
+
+        if (node.data == data) {
+            if (node.left == null && node.right == null) {
+                return null;
+            }
+            if (node.left == null) {
+                return node.right;
+            }
+            if (node.right == null) {
+                return node.left;
+            }
+            var tempNode = this.getMin(node.right);//两个节点且node.data==data
+            node.data = tempNode.data;
+            node.right = removeNode(node.right, tempNode.data);
+            return node;
+        } else if (node.data > data) {
+            node.left = removeNode(node.left, data);
+            return node;
+        } else if (node.data < data) {
+            node.right = removeNode(node.right, data);
+            return node;
+        }
     }
 }
 
