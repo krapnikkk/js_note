@@ -14,6 +14,7 @@ class Node {
 class BST {
     constructor() {
         this.root = null;
+        this.length = 0;
     }
 
     insert(data) {
@@ -28,12 +29,14 @@ class BST {
                 if (data < current.data) {
                     current = current.left;
                     if (current == null) {
+                        this.length++;
                         parent.left = n;
                         break;
                     }
                 } else {
                     current = current.right;
                     if (current == null) {
+                        this.length++;
                         parent.right = n;
                         break;
                     }
@@ -74,7 +77,7 @@ class BST {
 
     getMin() {
         var current = this.root;
-        while (current != null) {
+        while (current.left != null) {
             current = current.left;
         }
         return current.data;
@@ -82,7 +85,7 @@ class BST {
 
     getMax() {
         var current = this.root;
-        while (current != null) {
+        while (current.right != null) {
             current = current.right;
         }
         return current.data;
@@ -133,6 +136,10 @@ class BST {
             return node;
         }
     }
+
+    get length() {
+        return this.length;
+    }
 }
 
 function test() {
@@ -158,6 +165,14 @@ function test() {
 
     var max = nums.getMax();
     console.log("The maximum value of the BST is: " + max);
+
+    var value = 37,found = nums.find(value);
+    if(found){
+        console.log("Found "+value+"in the BST");
+    }else{
+        console.log(value +"was not found in the BST");
+    }
+
 }
 
 test();
