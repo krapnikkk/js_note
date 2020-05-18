@@ -11,8 +11,13 @@ class Graph {
             this.adj[i] = [];
             this.adj[i].push("");
         }
+        this.marked = [];
+        for (var i = 0; i < this.vertices; i++){
+            this.marked[i] = false;
+        }
     }
 
+    //邻接表
     addEdge(v,w){
         this.adj[v].push(w);
         this.adj[w].push(v);
@@ -27,6 +32,13 @@ class Graph {
                     console.log(this.adj[i][j]+" ");
                 }
             }
+        }
+    }
+
+    dfs(v){
+        this.marked[v]=true;
+        if(this.marked[v]!=undefined){
+            console.log("visited vertices");
         }
     }
 
