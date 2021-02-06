@@ -15,7 +15,7 @@
 |:-------- |:--------:|
 | [Javascript模块化编程](http://www.ruanyifeng.com/blog/2012/10/javascript_module.html) | [查看](./Javascript模块化编程) |
 | [CMD模块定义规范](https://github.com/seajs/seajs/issues/242) | [查看](./CMD模块定义规范) |
-|[require() 源码解读](http://www.ruanyifeng.com/blog/2015/05/require.html)|[查看](./require() 源码解读)|
+|[require()源码解读](http://www.ruanyifeng.com/blog/2015/05/require.html)|[查看](./require()源码解读)|
 
 
 [/placeholder]:p
